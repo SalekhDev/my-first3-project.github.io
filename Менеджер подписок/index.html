@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер подписок - управление вашими подписками</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">💰</span>
+                    <span class="logo-text">Менеджер подписок</span>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="home">Главная</a></li>
+                        <li><a href="#" class="nav-link" data-section="dashboard" id="dashboardNavLink" style="display: none;">Дашборд</a></li>
+                        <li><a href="#" class="nav-link" data-section="analytics" id="analyticsNavLink" style="display: none;">Аналитика</a></li>
+                        <li><a href="#" class="nav-link" data-section="settings" id="settingsNavLink" style="display: none;">Настройки</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-secondary" id="loginBtn">Войти</button>
+                    <button class="btn btn-primary" id="registerBtn">Регистрация</button>
+                    <button class="btn btn-secondary" id="logoutBtn" style="display: none;">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главная страница -->
+    <section id="home" class="section home-section">
+        <!-- Главный баннер -->
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Контролируйте свои подписки в одном месте</h1>
+                    <p>Управляйте всеми подписками, отслеживайте расходы и экономьте деньги с нашим удобным менеджером подписок.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" id="startManagingBtn">Начать управление</button>
+                        <button class="btn btn-secondary btn-large" id="learnMoreBtn">Узнать больше</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Статистика -->
+        <div class="section stats">
+            <div class="container">
+                <h2 class="section-title">Почему выбирают нас</h2>
+                <div class="stats-grid">
+                    <div class="stat-card card">
+                        <div class="stat-number">30%</div>
+                        <div class="stat-text">Средняя экономия пользователей</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-number">15,000+</div>
+                        <div class="stat-text">Активных пользователей</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-text">Довольных клиентов</div>
+                    </div>
+                    <div class="stat-card card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-text">Отслеживаемых сервисов</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Возможности -->
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title">Наши возможности</h2>
+                <div class="features-grid">
+                    <div class="feature-card card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Аналитика расходов</h3>
+                        <p>Детальная аналитика ваших подпиcок с визуализацией расходов по категориям и времени.</p>
+                    </div>
+                    <div class="feature-card card">
+                        <div class="feature-icon">⏰</div>
+                        <h3>Умные напоминания</h3>
+                        <p>Никогда не пропускайте сроки оплаты с настройкой персонализированных уведомлений.</p>
+                    </div>
+                    <div class="feature-card card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Оптимизация затрат</h3>
+                        <p>Получайте рекомендации по отмене неиспользуемых подписок и выбору более выгодных тарифов.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Дашборд -->
+    <section id="dashboard" class="section dashboard-section" style="display: none;">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2 class="section-title">Ваши подписки</h2>
+                <button class="btn btn-primary" id="addSubscriptionBtn">Добавить подписку</button>
+            </div>
+            
+            <div class="dashboard-stats">
+                <div class="dashboard-stat">
+                    <div class="dashboard-stat-value" id="totalSubscriptions">0</div>
+                    <div class="dashboard-stat-text">Всего подписок</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="dashboard-stat-value" id="monthlyCost">0 ₽</div>
+                    <div class="dashboard-stat-text">В месяц</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="dashboard-stat-value" id="yearlyCost">0 ₽</div>
+                    <div class="dashboard-stat-text">В год</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="dashboard-stat-value" id="nextPayment">-</div>
+                    <div class="dashboard-stat-text">Ближайший платеж</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="subscriptions-list">
+                    <h3>Активные подписки</h3>
+                    <div id="subscriptionsContainer">
+                        <!-- Подписки будут добавляться через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="analytics-sidebar">
+                    <div class="chart-container">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                    
+                    <div class="upcoming-payments">
+                        <h3>Ближайшие платежи</h3>
+                        <div id="upcomingPaymentsContainer">
+                            <!-- Платежи будут добавляться через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма добавления подписки -->
+    <section id="add-subscription" class="section add-subscription-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Добавить подписку</h2>
+            
+            <div class="subscription-form card">
+                <div class="form-group">
+                    <label for="subscriptionName">Название подписки</label>
+                    <input type="text" id="subscriptionName" placeholder="Например: Netflix, Spotify">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subscriptionCost">Стоимость</label>
+                        <input type="number" id="subscriptionCost" placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subscriptionCurrency">Валюта</label>
+                        <select id="subscriptionCurrency">
+                            <option value="RUB">RUB - Российский рубль</option>
+                            <option value="USD">USD - Доллар США</option>
+                            <option value="EUR">EUR - Евро</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subscriptionCategory">Категория</label>
+                        <select id="subscriptionCategory">
+                            <option value="streaming">Стриминг</option>
+                            <option value="software">Программное обеспечение</option>
+                            <option value="cloud">Облачные сервисы</option>
+                            <option value="education">Образование</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subscriptionFrequency">Периодичность</label>
+                        <select id="subscriptionFrequency">
+                            <option value="monthly">Ежемесячно</option>
+                            <option value="quarterly">Ежеквартально</option>
+                            <option value="yearly">Ежегодно</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subscriptionNextPayment">Следующий платеж</label>
+                    <input type="date" id="subscriptionNextPayment">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subscriptionNotes">Примечания (необязательно)</label>
+                    <textarea id="subscriptionNotes" rows="3" placeholder="Дополнительная информация о подписке"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary" id="saveSubscriptionBtn">Сохранить подписку</button>
+                    <button class="btn btn-secondary" id="cancelSubscriptionBtn">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Аналитика -->
+    <section id="analytics" class="section analytics-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Аналитика расходов</h2>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Распределение по категориям</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>Динамика расходов</h3>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="analytics-card full-width">
+                    <h3>Сравнение с предыдущим периодом</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Настройки -->
+    <section id="settings" class="section settings-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Настройки</h2>
+            
+            <div class="settings-tabs">
+                <button class="settings-tab active" data-tab="profile">Профиль</button>
+                <button class="settings-tab" data-tab="notifications">Уведомления</button>
+                <button class="settings-tab" data-tab="security">Безопасность</button>
+            </div>
+            
+            <div class="settings-content">
+                <div id="profileTab" class="settings-tab-content active">
+                    <div class="settings-group">
+                        <h3>Личная информация</h3>
+                        <div class="form-group">
+                            <label for="userName">Имя</label>
+                            <input type="text" id="userName" value="Пользователь">
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Email</label>
+                            <input type="email" id="userEmail" value="user@example.com">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Валюта по умолчанию</h3>
+                        <div class="form-group">
+                            <select id="defaultCurrency">
+                                <option value="RUB">RUB - Российский рубль</option>
+                                <option value="USD">USD - Доллар США</option>
+                                <option value="EUR">EUR - Евро</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="saveProfileBtn">Сохранить изменения</button>
+                </div>
+                
+                <div id="notificationsTab" class="settings-tab-content">
+                    <div class="settings-group">
+                        <h3>Настройки уведомлений</h3>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="emailNotifications" checked>
+                                <label for="emailNotifications">Email уведомления</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pushNotifications">
+                                <label for="pushNotifications">Push-уведомления</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="paymentReminders" checked>
+                                <label for="paymentReminders">Напоминания о платежах</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="priceChangeAlerts" checked>
+                                <label for="priceChangeAlerts">Уведомления об изменении цен</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>За сколько дней напоминать о платежах</h3>
+                        <div class="form-group">
+                            <select id="reminderDays">
+                                <option value="1">За 1 день</option>
+                                <option value="3" selected>За 3 дня</option>
+                                <option value="7">За 7 дней</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="saveNotificationsBtn">Сохранить настройки</button>
+                </div>
+                
+                <div id="securityTab" class="settings-tab-content">
+                    <div class="settings-group">
+                        <h3>Смена пароля</h3>
+                        <div class="form-group">
+                            <label for="currentPassword">Текущий пароль</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Новый пароль</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Подтвердите пароль</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Двухфакторная аутентификация</h3>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="twoFactorAuth">
+                            <label for="twoFactorAuth">Включить двухфакторную аутентификацию</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="saveSecurityBtn">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма регистрации/входа -->
+    <section id="auth" class="section auth-section" style="display: none;">
+        <div class="container">
+            <div class="auth-container">
+                <div class="card">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Вход</button>
+                        <button class="auth-tab" data-tab="register">Регистрация</button>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form active">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Пароль</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Войти</button>
+                    </form>
+                    
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="regName">Имя</label>
+                            <input type="text" id="regName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" id="regEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regPassword">Пароль</label>
+                            <input type="password" id="regPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regConfirmPassword">Подтвердите пароль</label>
+                            <input type="password" id="regConfirmPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О проекте</h3>
+                    <p>Менеджер подписок - это удобный инструмент для контроля всех ваших подписок в одном месте. Экономьте время и деньги с нашим сервисом.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Разделы сайта</h3>
+                    <ul>
+                        <li><a href="#" class="footer-nav-link" data-section="home">Главная</a></li>
+                        <li><a href="#" class="footer-nav-link" data-section="dashboard">Дашборд</a></li>
+                        <li><a href="#" class="footer-nav-link" data-section="analytics">Аналитика</a></li>
+                        <li><a href="#" class="footer-nav-link" data-section="settings">Настройки</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> Email: support@subscriptionmanager.ru</li>
+                        <li><i class="fas fa-phone"></i> Телефон: +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Адрес: Москва, ул. Финансовая, д. 15</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Менеджер подписок. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
